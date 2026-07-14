@@ -1,0 +1,14 @@
+# Ignore system backup files
+*.bak
+*.backup
+*.swp
+*.swo
+*~
+.*.swp
+
+# Ignore OS metadata
+.DS_Store
+Thumbs.db
+
+# Ignore log files
+*.log
