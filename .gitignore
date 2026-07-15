@@ -1,14 +1,19 @@
-# Ignore system backup files
-*.bak
-*.backup
+# OS files
+.DS_Store
+Thumbs.db
 *.swp
 *.swo
 *~
-.*.swp
 
-# Ignore OS metadata
-.DS_Store
-Thumbs.db
+# Backup artifacts
+backups/
+*.tar.gz
 
-# Ignore log files
-*.log
+# Editor configs
+.idea/
+.vscode/
+*.code-workspace
+
+# Temp files
+*.tmp
+*.temp
