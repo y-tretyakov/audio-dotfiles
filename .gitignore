@@ -17,3 +17,9 @@ backups/
 # Temp files
 *.tmp
 *.temp
+
+# Rust / Cargo (installer-rs)
+installer-rs/target/
+installer-rs/Cargo.lock
+
+# Shell scripts (everything is versioned — no generated files)
