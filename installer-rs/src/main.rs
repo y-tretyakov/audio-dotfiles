@@ -157,12 +157,12 @@ fn execute_backup(state: &mut AppState) -> anyhow::Result<String> {
     let home = home_dir();
     let dirs_to_backup = [
         (
-            home.join(".config/easyeffects/output"),
-            ".config/easyeffects/output",
+            home.join(".local/share/easyeffects/output"),
+            ".local/share/easyeffects/output",
         ),
         (
-            home.join(".config/easyeffects/irs"),
-            ".config/easyeffects/irs",
+            home.join(".local/share/easyeffects/irs"),
+            ".local/share/easyeffects/irs",
         ),
         (
             home.join(".config/pipewire/pipewire.conf.d"),
@@ -239,7 +239,7 @@ fn deploy_presets(state: &mut AppState) -> anyhow::Result<()> {
     state.current_step = AppStep::DeployingPresets;
 
     let repo_dir = PathBuf::from(REPO_ROOT).join("easyeffects/output");
-    let target_dir = home_dir().join(".config/easyeffects/output");
+    let target_dir = home_dir().join(".local/share/easyeffects/output");
 
     if !repo_dir.exists() {
         return Err(anyhow!(
@@ -270,7 +270,7 @@ fn deploy_irs(state: &mut AppState) -> anyhow::Result<()> {
     state.current_step = AppStep::DeployingIRs;
 
     let repo_dir = PathBuf::from(REPO_ROOT).join("easyeffects/irs");
-    let target_dir = home_dir().join(".config/easyeffects/irs");
+    let target_dir = home_dir().join(".local/share/easyeffects/irs");
 
     if !repo_dir.exists() {
         return Err(anyhow!("Repo IRs directory not found: {}", repo_dir.display()));
@@ -464,12 +464,12 @@ fn rollback(state: &mut AppState) -> anyhow::Result<()> {
     let home = home_dir();
     let restore_pairs = [
         (
-            temp_dir.join(".config/easyeffects/output"),
-            home.join(".config/easyeffects/output"),
+            temp_dir.join(".local/share/easyeffects/output"),
+            home.join(".local/share/easyeffects/output"),
         ),
         (
-            temp_dir.join(".config/easyeffects/irs"),
-            home.join(".config/easyeffects/irs"),
+            temp_dir.join(".local/share/easyeffects/irs"),
+            home.join(".local/share/easyeffects/irs"),
         ),
         (
             temp_dir.join(".config/pipewire/pipewire.conf.d"),

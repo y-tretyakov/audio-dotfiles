@@ -14,7 +14,7 @@
 │   │   ├── Perfect EQ.json         — плоский нейтральный эквалайзер
 │   │   ├── Bass Enhancing.json     — бас-усиление 60 Гц
 │   │   ├── Laptop_Pavilion Optimizer.json  — мультибанд + компрессор
-│   │   └── HP Pavilion Safe Limiter.json   — лимитер (-1 дБ, 5 мс lookahead)
+│   │   └── HP Pavilion Safe Limiter.json   — EQ + exciter + autogain + лимитер + safe limiter
 │   └── irs/                  # Импульсные отклики (4 шт.)
 │       ├── Dolby Atmos.irs
 │       ├── Waves MaxxAudio Pro.irs
@@ -76,8 +76,8 @@ bash rollback.sh
 ## Что делает установка
 
 1. **Бекап** существующих конфигов в `~/.config/audio_backup_YYYYMMDD_HHMMSS.tar.gz`
-2. **Симлинки** пресетов EasyEffects из репозитория в `~/.config/easyeffects/output/`
-3. **Симлинки** импульсных откликов из репозитория в `~/.config/easyeffects/irs/`
+2. **Симлинки** пресетов EasyEffects из репозитория в `~/.local/share/easyeffects/output/`
+3. **Симлинки** импульсных откликов из репозитория в `~/.local/share/easyeffects/irs/`
 4. **Симлинк** конфига PipeWire в `~/.config/pipewire/pipewire.conf.d/10-quantum.conf`
 5. **Добавление** EasyEffects в автозагрузку niri (`run-on-spawn "easyeffects" "--gapplication-service"`)
 6. **Рестарт** служб PipeWire: `systemctl --user restart pipewire pipewire-pulse wireplumber`
@@ -102,13 +102,15 @@ bash rollback.sh
 
 ## EasyEffects: HP Pavilion Safe Limiter
 
-Лимитер с параметрами:
-- Input Gain: **0 дБ**
-- Threshold: **-1.0 дБ**
-- Lookahead: **5 мс**
-- Oversampling: **включён**
+Полная копия пресета **Advanced Auto Gain** с дополнительным Safe Limiter в конце:
 
-Рекомендуется размещать **последним** в цепочке эффектов (plugins_order: `["limiter#0"]`).
+| # | Эффект | Назначение |
+|---|--------|------------|
+| 1 | `equalizer#0` | 30-полосный эквалайзер (RLC BT, +4 дБ на 113–358 Гц, срез на 1–1.8 кГц) |
+| 2 | `exciter#0` | Возбуждение высоких частот (6%, 5.5 кГц) |
+| 3 | `autogain#0` | Автоматическая нормализация громкости (target -12 дБ LUFS) |
+| 4 | `limiter#0` | Основной лимитер (threshold **0 дБ**, lookahead **10 мс**, oversampling **None**) |
+| 5 | `limiter#1` | **Safe Limiter** — финальная защита (threshold **-1.0 дБ**, lookahead **5 мс**) |
 
 ---
 
